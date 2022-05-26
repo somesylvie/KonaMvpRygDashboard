@@ -33,7 +33,7 @@ namespace KonaMvpRygDashboard.Controllers
             return result;
         }
 
-        [HttpGet("team/{managerId}")]
+        [HttpGet("fullteam/{managerId}")]
         public IActionResult GetMultiTeamStatsByManagerId(string managerId)
         {
             IActionResult result;

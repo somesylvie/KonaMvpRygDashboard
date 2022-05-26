@@ -1,6 +1,17 @@
 using KonaMvpRygDashboard;
 
+var LocalDevOrigins = "_localDevOrigins";
 var builder = WebApplication.CreateBuilder(args);
+
+// Let the locally-running react app hit the backend
+builder.Services.AddCors(options =>
+{
+    options.AddPolicy(name: LocalDevOrigins,
+                      policy =>
+                      {
+                          policy.WithOrigins("http://localhost:3000");
+                      });
+});
 
 // Add services to the container.
 
@@ -18,6 +29,8 @@ if (app.Environment.IsDevelopment())
     app.UseSwagger();
     app.UseSwaggerUI();
 }
+
+app.UseCors(LocalDevOrigins);
 
 app.UseHttpsRedirection();
 
