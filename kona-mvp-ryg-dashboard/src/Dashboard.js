@@ -9,66 +9,66 @@ import Alert from 'react-bootstrap/Alert'
 
 class Dashboard extends React.Component {
 
-  constructor(props) {
-    super(props);
-    this.state = {
-        error: null,
-        isLoaded: false,
-        teamStats: [],
-        manager: "",
-        displayScope: "directteam"
-    };
-    
-    this.handleChange = this.handleChange.bind(this);
-    this.handleSubmit = this.handleSubmit.bind(this);
-  }
+    constructor(props) {
+        super(props);
+        this.state = {
+            error: null,
+            isLoaded: false,
+            teamStats: [],
+            manager: "",
+            displayScope: "directteam"
+        };
+
+        this.handleChange = this.handleChange.bind(this);
+        this.handleSubmit = this.handleSubmit.bind(this);
+    }
 
     handleChange(event) {
         const target = event.target;
         const value = target.value;
         const name = target.name;
-    
+
         this.setState({
-          [name]: value
+            [name]: value
         });
         console.log(`Set ${name} to ${value}`)
-      }
-
-  handleSubmit(event) {
-    const url=`https://localhost:7027/dashboard/${this.state.displayScope}/${this.state.manager}`
-    
-    // Clear out the error message in case the previous error was resolved
-    this.setState({error: null})
-    
-    if (this.state.manager !== ""){
-        fetch(url)
-        .then(res => res.json())
-        .then(
-          (result) => {
-              console.log(result);
-            this.setState({
-              isLoaded: true,
-              teamStats: result
-            });
-          },
-          (error) => {
-            this.setState({
-              isLoaded: true,
-              error
-            });
-          }
-        )
-    } else {
-        this.setState({error: {message: "You must select a manager"}})
     }
 
-    event.preventDefault();
-  }
+    handleSubmit(event) {
+        const url=`https://localhost:7027/dashboard/${this.state.displayScope}/${this.state.manager}`
 
-  render() {
+        // Clear out the error message in case the previous error was resolved
+        this.setState({error: null})
+
+        if (this.state.manager !== ""){
+            fetch(url)
+            .then(res => res.json())
+            .then(
+                (result) => {
+                    console.log(result);
+                this.setState({
+                    isLoaded: true,
+                    teamStats: result
+                });
+                },
+                (error) => {
+                this.setState({
+                    isLoaded: true,
+                    error
+                });
+                }
+            )
+        } else {
+            this.setState({error: {message: "You must select a manager"}})
+        }
+
+        event.preventDefault();
+    }
+
+    render() {
 
     const { error, isLoaded, teamStats, displayScope, manager } = this.state;
-      return (
+        return (
         <Container>
             <Row className="p-3">
                 <Form as={Card} className="w-100" >
@@ -152,7 +152,7 @@ class Dashboard extends React.Component {
                 
         </Container>
     )
-}
+    }
 }
 
 export default Dashboard;
